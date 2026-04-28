@@ -14,7 +14,7 @@
     <header class="topbar">
       <div class="brand">SpendWise</div>
       <nav class="auth-links" aria-label="Authentication">
-        <a href="login.html" class="login">Login</a>
+        <a href="login.html" class="login js-open-login">Login</a>
         <a href="signup.html" class="signup">Sign Up</a>
       </nav>
     </header>
@@ -27,7 +27,7 @@
             Smart expense tracking,powerful insights, and easy
             budgeting all in one place to help you save more and stress less.
           </p>
-          <a href="login.html" class="cta">Get Started Free <span aria-hidden="true">→</span></a>
+          <a href="login.html" class="cta js-open-login">Get Started Free <span aria-hidden="true">→</span></a>
         </div>
 
         <div class="hero-visual" aria-label="Dashboard preview card">
@@ -81,5 +81,118 @@
       <a href="#">Terms</a>
     </footer>
   </div>
+
+  <div class="login-popup" id="loginPopup" aria-hidden="true">
+    <div class="login-popup-backdrop" data-close-popup></div>
+
+    <section class="login-popup-modal" role="dialog" aria-modal="true" aria-labelledby="loginPopupTitle">
+      <button type="button" class="close-btn" aria-label="Close" data-close-popup>x</button>
+
+      <article class="intro-panel">
+        <div class="intro-shape" aria-hidden="true"></div>
+        <p class="mini-brand"><span class="brand-dot"></span>SpendWise</p>
+
+        <h1>Welcome to<br /><span>SpendWise</span>.</h1>
+
+        <p class="intro-text">
+          Track your expenses, manage your budget,
+          and achieve your financial goals with ease.
+        </p>
+
+        <ul class="benefit-list">
+          <li>
+            <strong>Track Expenses</strong>
+            <small>Monitor every spending in real time.</small>
+          </li>
+          <li>
+            <strong>Smart Insights</strong>
+            <small>Get AI powered tips to spend better.</small>
+          </li>
+          <li>
+            <strong>Save More</strong>
+            <small>Set budgets and improve your saving goals.</small>
+          </li>
+        </ul>
+
+        <div class="preview-card" aria-hidden="true">
+          <img src="assets/ChatGPT%20Image%20Apr%2026,%202026,%2012_38_25%20AM%202.svg" alt="Dashboard preview" />
+        </div>
+      </article>
+
+      <article class="form-panel">
+        <h2 id="loginPopupTitle">LOGIN</h2>
+
+        <form class="login-form" action="#" method="post">
+          <label for="popup-email">Email</label>
+          <input id="popup-email" name="email" type="email" placeholder="abc@gmail.com" required />
+
+          <label for="popup-password">Password</label>
+          <div class="password-wrap">
+            <input id="popup-password" name="password" type="password" placeholder="********" required />
+            <button type="button" class="password-toggle" aria-label="Toggle password">o</button>
+          </div>
+
+          <a href="#" class="forgot-link">Forgot Password?</a>
+
+          <button type="submit" class="login-btn">LOGIN</button>
+        </form>
+
+        <p class="signup-text">
+          Not a user? <a href="signup.html">Sign Up Now</a>
+        </p>
+      </article>
+    </section>
+  </div>
+
+  <script>
+    (function () {
+      var popup = document.getElementById("loginPopup");
+      var openButtons = document.querySelectorAll(".js-open-login");
+      var closeButtons = document.querySelectorAll("[data-close-popup]");
+      var passwordToggle = popup ? popup.querySelector(".password-toggle") : null;
+      var passwordInput = popup ? popup.querySelector("#popup-password") : null;
+
+      if (!popup) {
+        return;
+      }
+
+      function openPopup() {
+        popup.classList.add("is-open");
+        popup.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
+      }
+
+      function closePopup() {
+        popup.classList.remove("is-open");
+        popup.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-open");
+      }
+
+      openButtons.forEach(function (btn) {
+        btn.addEventListener("click", function (event) {
+          event.preventDefault();
+          openPopup();
+        });
+      });
+
+      closeButtons.forEach(function (btn) {
+        btn.addEventListener("click", closePopup);
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && popup.classList.contains("is-open")) {
+          closePopup();
+        }
+      });
+
+      if (passwordToggle && passwordInput) {
+        passwordToggle.addEventListener("click", function () {
+          var isPassword = passwordInput.type === "password";
+          passwordInput.type = isPassword ? "text" : "password";
+          passwordToggle.textContent = isPassword ? "-" : "o";
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
